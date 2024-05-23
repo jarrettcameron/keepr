@@ -1,8 +1,53 @@
-CREATE TABLE IF NOT EXISTS accounts(
-  id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
-  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
-  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-  name varchar(255) COMMENT 'User Name',
-  email varchar(255) COMMENT 'User Email',
-  picture varchar(255) COMMENT 'User Picture'
+-- Active: 1716499216590@@127.0.0.1@3306@vibrant_rain_e478fb_db
+CREATE TABLE IF NOT EXISTS keeprAccounts (
+    id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+    name varchar(255) COMMENT 'User Name',
+    email varchar(255) COMMENT 'User Email',
+    picture varchar(255) COMMENT 'User Picture',
+    coverImg varchar(1000) NOT NULL DEFAULT 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2676&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 ) default charset utf8mb4 COMMENT '';
+
+CREATE TABLE keep (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    creatorId VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    img VARCHAR(1000) NOT NULL,
+    views INT UNSIGNED NOT NULL DEFAULT 0,
+    FOREIGN KEY (creatorId) REFERENCES keeprAccounts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE vaultkeep (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    creatorId VARCHAR(255) NOT NULL,
+    vaultId INT NOT NULL,
+    keepId INT NOT NULL,
+    FOREIGN KEY (creatorId) REFERENCES keeprAccounts (id) ON DELETE CASCADE,
+    FOREIGN KEY (vaultId) REFERENCES vault (id) ON DELETE CASCADE,
+    FOREIGN KEY (keepId) REFERENCES keep (id) ON DELETE CASCADE,
+    UNIQUE (creatorId, vaultId, keepId)
+);
+
+CREATE TABLE vault (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    creatorId VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    img VARCHAR(1000) NOT NULL,
+    isPrivate BOOLEAN NOT NULL DEFAULT false,
+    FOREIGN KEY (creatorId) REFERENCES keeprAccounts (id) ON DELETE CASCADE
+);
+
+DROP TABLE vault, vaultkeep, keep;
+
+SELECT * FROM accounts;
+
+SELECT * FROM keeprAccounts;
