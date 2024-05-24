@@ -1,26 +1,28 @@
 namespace keepr.Controllers;
 
 [ApiController]
-[Route("api/keeps")]
-public class KeepsController : ControllerBase
+[Route("api/vaults")]
+public class VaultsController : ControllerBase
 {
-    private readonly Auth0Provider _auth0provider;
+    private readonly VaultsService _vaultsService;
     private readonly KeepsService _keepsService;
+    private readonly Auth0Provider _auth0provider;
 
-    public KeepsController(KeepsService keepsService, Auth0Provider auth0Provider)
+    public VaultsController(VaultsService vaultsService, KeepsService keepsService, Auth0Provider auth0Provider)
     {
-        _keepsService = keepsService;
+        _vaultsService = vaultsService;
         _auth0provider = auth0Provider;
+        _keepsService = keepsService;
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<Keep>> Create([FromBody] Keep keepData)
+    public async Task<ActionResult<Vault>> Create([FromBody] Vault vaultData)
     {
         try
         {
             Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
-            return Ok(_keepsService.Create(keepData, userInfo));
+            return Ok(_vaultsService.Create(vaultData, userInfo));
         }
         catch (Exception exception)
         {
@@ -28,26 +30,13 @@ public class KeepsController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public ActionResult<List<Keep>> GetAll()
-    {
-        try
-        {
-            return Ok(_keepsService.GetAll());
-        }
-        catch (Exception exception)
-        {
-            return BadRequest(exception.Message);
-        }
-    }
-
-    [HttpGet("{keepId}")]
-    public async Task<ActionResult<Keep>> GetById(int keepId)
+    [HttpGet("{vaultId}")]
+    public async Task<ActionResult<Vault>> GetById(int vaultId)
     {
         try
         {
             Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
-            return Ok(_keepsService.GetById(keepId, userInfo));
+            return Ok(_vaultsService.GetById(vaultId, userInfo));
         }
         catch (Exception exception)
         {
@@ -56,13 +45,13 @@ public class KeepsController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut("{keepId}")]
-    public async Task<ActionResult<Keep>> Edit(int keepId, [FromBody] Keep keepData)
+    [HttpPut("{vaultId}")]
+    public async Task<ActionResult<Vault>> Edit(int vaultId, [FromBody] Vault vaultData)
     {
         try
         {
             Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
-            return Ok(_keepsService.Edit(keepId, keepData, userInfo));
+            return Ok(_vaultsService.Edit(vaultId, vaultData, userInfo));
         }
         catch (Exception exception)
         {
@@ -71,13 +60,27 @@ public class KeepsController : ControllerBase
     }
 
     [Authorize]
-    [HttpDelete("{keepId}")]
-    public async Task<ActionResult<string>> Destroy(int keepId)
+    [HttpDelete("{vaultId}")]
+    public async Task<ActionResult<string>> Destroy(int vaultId)
     {
         try
         {
             Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
-            return Ok(_keepsService.Destroy(keepId, userInfo));
+            return Ok(_vaultsService.Destroy(vaultId, userInfo));
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [HttpGet("{vaultId}/keeps")]
+    public async Task<ActionResult<List<VaultKeepView>>> GetKeepsByVault(int vaultId)
+    {
+        try
+        {
+            Account userInfo = await _auth0provider.GetUserInfoAsync<Account>(HttpContext);
+            return Ok(_keepsService.GetKeepsByVault(vaultId, userInfo));
         }
         catch (Exception exception)
         {
