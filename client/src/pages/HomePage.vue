@@ -1,37 +1,57 @@
 <script setup>
+import { computed, onMounted } from 'vue';
+import { AppState } from '../AppState';
+import Pop from '../utils/Pop';
+import { keepsService } from '../services/KeepsService';
+import { Modal } from 'bootstrap';
+
+const keeps = computed(() => AppState.keeps)
+
+async function getKeeps() {
+    try {
+      await keepsService.getKeeps()
+    }
+    catch (error){
+      Pop.error(error);
+    }
+}
+
+onMounted(() => {
+    getKeeps()
+})
 
 </script>
 
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+            <div class="col-xxl-8 col-lg-10 col-md-10 col-sm-11 col-12">
+                <div class="row">
+                    <div class="col-12 masonry">
+                        <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
 
-  .home-card {
-    width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
+.masonry {
+    column-count: 4;
+    column-gap: 1em;
+    width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+    .masonry {
+        column-count: 2;
+        column-gap: 0.5em;
+        >* {
+            padding-bottom: 0.5em;
+        }
+    }
+}
+
 </style>

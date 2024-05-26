@@ -6,15 +6,13 @@ import Navbar from './components/Navbar.vue'
 </script>
 
 <template>
-  <header>
+  <header class="sticky-top">
     <Navbar />
   </header>
   <main>
     <router-view />
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
+  <KeepModal/>
 </template>
 
 <style lang="scss">
@@ -22,12 +20,5 @@ import Navbar from './components/Navbar.vue'
 
 :root {
   --main-height: calc(100vh - 32px - 64px);
-}
-
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
 }
 </style>

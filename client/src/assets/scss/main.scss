@@ -3,21 +3,37 @@
 @import "./loaders.scss";
 
 body {
-  overscroll-behavior: none;
+    overscroll-behavior: none;
+    font-family: 'Oxygen', sans-serif;
+}
+
+.marko {
+    font-family: 'Marko One';
+}
+
+.inter {
+    font-family: 'Inter', sans-serif;
+}
+
+.pfp {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 100em;
+    box-shadow: 0px 4px 10px rgba(32, 12, 0, 0.3);
 }
 
 #app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--bs-page);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bs-page);
 }
 
 main {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
-
