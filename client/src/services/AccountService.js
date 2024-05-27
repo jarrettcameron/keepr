@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
+import { Vault } from '../models/Vault'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
@@ -10,6 +11,16 @@ class AccountService {
       AppState.account = new Account(res.data)
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
+    }
+  }
+
+  async getMyVaults() {
+    try
+    {
+        const response = await api.get('/account/vaults')
+        AppState.myVaults = response.data.map(o => new Vault(o))
+    } catch (error) {
+        logger.error(error)
     }
   }
 }

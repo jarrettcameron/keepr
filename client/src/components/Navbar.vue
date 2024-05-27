@@ -39,6 +39,7 @@ onMounted(() => {
 
 <style scoped>
 .keeprLogo {
+    user-select: none;
     aspect-ratio: 1.1/1;
     width: fit-content;
     padding: 0.27em;
@@ -47,6 +48,9 @@ onMounted(() => {
     border: 2px solid var(--bs-secondary);
     line-height: 1em;
     font-size: 0.89em;
+    background-color: transparent !important;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
 a:hover {

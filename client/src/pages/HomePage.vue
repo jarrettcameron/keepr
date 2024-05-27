@@ -6,6 +6,7 @@ import { keepsService } from '../services/KeepsService';
 import { Modal } from 'bootstrap';
 
 const keeps = computed(() => AppState.keeps)
+const account = computed(() => AppState.account)
 
 async function getKeeps() {
     try {
@@ -23,11 +24,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-4">
         <div class="row justify-content-center">
             <div class="col-xxl-8 col-lg-10 col-md-10 col-sm-11 col-12">
                 <div class="row">
                     <div class="col-12 masonry">
+                        <KeepCard v-if="account"/>
                         <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep"/>
                     </div>
                 </div>
@@ -37,21 +39,4 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-
-.masonry {
-    column-count: 4;
-    column-gap: 1em;
-    width: 100%;
-}
-
-@media screen and (max-width: 768px) {
-    .masonry {
-        column-count: 2;
-        column-gap: 0.5em;
-        >* {
-            padding-bottom: 0.5em;
-        }
-    }
-}
-
 </style>

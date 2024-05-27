@@ -28,14 +28,18 @@ async function logout() {
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
-          <div class="list-group">
-            <router-link :to="{ name: 'Account' }">
-              <div class="list-group-item dropdown-item list-group-item-action">
-                Manage Account
+          <div v-if="account" class="list-group">
+            <router-link :to="{ name: 'Profile', params: { profileId: account.id } }">
+              <div class="list-group-item dropdown-item list-group-item-action selectable">
+                My Profile
               </div>
             </router-link>
-            <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
-              <i class="mdi mdi-logout"></i>
+            <router-link :to="{ name: 'Account' }">
+              <div class="list-group-item dropdown-item list-group-item-action selectable">
+                Edit Account
+              </div>
+            </router-link>
+            <div class="list-group-item dropdown-item list-group-item-action selectable" @click="logout">
               Logout
             </div>
           </div>
@@ -45,4 +49,14 @@ async function logout() {
   </span>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.navbar-text {
+    user-select: none;
+}
+
+.dropdown-menu,.dropdown-menu>.list-group, .dropdown-menu>.list-group *,.list-group-item {
+    border-radius: 0 !important;
+}
+
+</style>
