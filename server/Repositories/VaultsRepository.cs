@@ -55,7 +55,7 @@ public class VaultsRepository
     public List<Vault> GetByCreator(string creatorId)
     {
         string sql = @"
-        SELECT * FROM vault JOIN keeprAccounts ON keeprAccounts.id = vault.creatorId WHERE vault.creatorId = @CreatorId;";
+        SELECT * FROM vault JOIN keeprAccounts ON keeprAccounts.id = vault.creatorId WHERE vault.creatorId = @CreatorId ORDER BY vault.createdAT DESC;";
         List<Vault> vaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
         {
             vault.Creator = profile;

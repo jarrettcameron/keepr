@@ -52,7 +52,7 @@ a {
     column-gap: 1em;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
     .masonry {
         column-count: 2;
         column-gap: 0.5em;
@@ -61,4 +61,8 @@ a {
             padding-bottom: 0.5em;
         }
     }
+}
+
+.border-0:active {
+    border: 0 !important;
 }

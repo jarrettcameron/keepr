@@ -28,7 +28,7 @@ public class KeepsRepository
 
     public List<Keep> GetAll()
     {
-        string sql = @"SELECT keep.*,COUNT(vaultkeep.id) AS kept,keeprAccounts.* FROM keep LEFT JOIN vaultkeep ON vaultkeep.keepId = keep.id JOIN keeprAccounts ON keeprAccounts.id = keep.creatorId GROUP BY (keep.id);";
+        string sql = @"SELECT keep.*,COUNT(vaultkeep.id) AS kept,keeprAccounts.* FROM keep LEFT JOIN vaultkeep ON vaultkeep.keepId = keep.id JOIN keeprAccounts ON keeprAccounts.id = keep.creatorId GROUP BY (keep.id) ORDER BY keep.createdAt DESC;";
         List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
         {
             keep.Creator = profile;

@@ -12,7 +12,7 @@ async function setActive(keep) {
         await keepsService.setActive(keep)
         Modal.getOrCreateInstance('#keepModal').show()
     } catch (error) {
-        Pop.error(error.response.data)
+        Pop.error(error)
     }
     
 }
@@ -34,15 +34,9 @@ async function setActive(keep) {
             </div>
         </div>
     </div>
-    <div v-else class="keepcard vt" title="Add Your Keep">
+    <button v-else class="btn border-0 px-0 pt-0 keepcard vt" title="Add Your Keep" data-bs-toggle="modal" data-bs-target="#createKeepModal">
         <img class="imgshadow rounded" src="/src/assets/img/create.png" onerror="this.src = 'https://user-images.githubusercontent.com/106156/51716184-21e08680-203c-11e9-971c-9b7a384a8f21.jpg'" alt="">
-        <div class="position-relative">
-            <div class="position-absolute title2 text-white fw-bold w-100 p-2 rounded-bottom">
-                <div class="d-flex justify-content-between align-items-end">
-                </div>
-            </div>
-        </div>
-    </div>
+    </button>
 </template>
 
 
@@ -71,11 +65,11 @@ async function setActive(keep) {
 
     >img {
         width: 100%;
-        object-fit: container;
+        min-height: 80px !important;
     }
 }
 
-.keepcard:not(.vt):hover {
+.keepcard:hover {
     transform: scale(1.03);
 }
 

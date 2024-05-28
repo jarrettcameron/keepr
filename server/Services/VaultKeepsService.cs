@@ -25,6 +25,10 @@ public class VaultKeepsService
     public string Destroy(int vaultKeepId, Account userInfo)
     {
         VaultKeep vaultKeep = _repository.GetById(vaultKeepId);
+        if (vaultKeep == null)
+        {
+            throw new Exception("NOT FOUND - Could not find object by ID.");
+        }
         Vault vault = _vaultsService.GetById(vaultKeep.VaultId, userInfo);
         if (vault.CreatorId != userInfo.Id)
         {
