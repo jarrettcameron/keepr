@@ -14,10 +14,10 @@ async function createKeep() {
     try {
         await keepsService.createKeep(formData.value)
         formData.value = {
-    name: '',
-    description: '',
-    img: ''
-}
+            name: '',
+            description: '',
+            img: ''
+        }
         Modal.getInstance('#createKeepModal')?.hide()
     }
     catch (error){
@@ -55,5 +55,9 @@ async function createKeep() {
         border-bottom: 1px solid grey;
         border-radius: 0;
         box-shadow: none;
+    }
+
+    textarea {
+        max-height: 150px;
     }
 </style>

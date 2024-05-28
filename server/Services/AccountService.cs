@@ -14,6 +14,16 @@ public class AccountService
         return _repo.GetByEmail(email);
     }
 
+    internal Account GetProfileById(string id)
+    {
+        Account user = _repo.GetById(id);
+        if (user == null)
+        {
+            throw new Exception("NOT FOUND - Could not find object by ID.");
+        }
+        return user;
+    }
+
     internal Account GetOrCreateProfile(Account userInfo)
     {
         Account profile = _repo.GetById(userInfo.Id);
@@ -24,9 +34,9 @@ public class AccountService
         return profile;
     }
 
-    internal Account Edit(Account editData, string userEmail)
+    internal Account Edit(Account editData, Account userInfo)
     {
-        Account original = GetProfileByEmail(userEmail);
+        Account original = GetProfileById(userInfo.Id);
         original.Name = editData.Name?.Length > 0 ? editData.Name : original.Name;
         original.Picture = editData.Picture?.Length > 0 ? editData.Picture : original.Picture;
         original.CoverImg = editData.CoverImg?.Length > 0 ? editData.CoverImg : original.CoverImg;

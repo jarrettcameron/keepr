@@ -44,7 +44,7 @@ onMounted(() => {
             <div class="col-xxl-10 col-sm-11 col-12">
                 <div class="row justify-content-center">
                     <div class="col-md-11 col-12">
-                        <img :src="profile.coverImg" class="coverImg rounded" :alt="`${profile.name}'s Cover Image'`">
+                        <img :src="profile.coverImg" onerror="this.src = 'https://user-images.githubusercontent.com/106156/51716184-21e08680-203c-11e9-971c-9b7a384a8f21.jpg'" class="coverImg rounded" :alt="`${profile.name}'s Cover Image'`">
                         <div class="position-relative w-100">
                             <div class="position-absolute w-100 text-center pfpContainer">
                                 <img :src="profile.picture" class="pfp mx-auto" height="120" alt="">

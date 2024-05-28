@@ -65,4 +65,8 @@ async function createVault() {
         border-radius: 0;
         box-shadow: none;
     }
+
+    textarea {
+        max-height: 150px;
+    }
 </style>
